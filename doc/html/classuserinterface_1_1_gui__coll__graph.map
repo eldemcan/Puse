@@ -1,0 +1,8 @@
+<map id="userinterface.Gui" name="userinterface.Gui">
+<area shape="rect" id="node28" href="$classuserinterface_1_1_note_gui.html" title="userinterface.NoteGui" alt="" coords="649,931,796,957"/>
+<area shape="rect" id="node44" href="$classuserinterface_1_1_seperate_display.html" title="userinterface.SeperateDisplay" alt="" coords="625,409,820,436"/>
+<area shape="rect" id="node70" href="$classuserinterface_1_1_ref_gui.html" title="userinterface.RefGui" alt="" coords="653,848,792,875"/>
+<area shape="rect" id="node16" href="$classuserinterface_1_1_preview_pane.html" title="userinterface.PreviewPane" alt="" coords="635,167,810,193"/>
+<area shape="rect" id="node52" href="$class_svg_1_1_svg.html" title="Svg.Svg" alt="" coords="314,333,382,360"/>
+<area shape="rect" id="node56" href="$class_svg_1_1_exporter.html" title="Svg.Exporter" alt="" coords="39,308,135,335"/>
+</map>
