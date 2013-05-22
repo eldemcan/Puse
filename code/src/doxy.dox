@@ -1,0 +1,10 @@
+/*! \mainpage PUSE 
+*
+* \section intro_sec Introduction
+*
+* Puse is a tool which helps users to create sequence diagrams using PlantUML framework. Puse enables users to represent and change their sequence diagrams in a convenient and flexible way. 
+* Main focus of Puse is the decomposition mechanism of UML2 sequence diagrams.  
+*  
+*
+* 
+*/

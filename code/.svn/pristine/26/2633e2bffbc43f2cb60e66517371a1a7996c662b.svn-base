@@ -1,0 +1,58 @@
+package Controller;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+import org.apache.batik.swing.svg.LinkActivationEvent;
+import org.apache.batik.swing.svg.LinkActivationListener;
+
+import Svg.Data;
+
+public class LinkActivation implements LinkActivationListener {
+
+	Control c;
+
+	public LinkActivation(Control temp) {
+		c = temp ;
+	}
+
+	@Override
+	public void linkActivated(LinkActivationEvent arg0) {
+		String clicked_link=Data.pruneFilePath(arg0.getReferencedURI());
+
+		if(Data.open_ref_new_window){
+			System.out.println("anne marie:"+clicked_link);
+			c.canvasjobs.reload(c.userinferface.linkwindow.seperate_svg_display,clicked_link);
+			c.userinferface.linkwindow.setVisible(true);
+		}//if
+
+		else{
+
+	//		if(Data.is_saved==true){
+				c.userinferface.back_button.setEnabled(true);
+				String input_file_format=null;
+				try {
+					input_file_format=Data.pruneFilePath(arg0.getReferencedURI().replace(".svg",".txt"));
+					c.userinferface.code_text_area.read(new BufferedReader(new FileReader(input_file_format)), null);
+				} catch (FileNotFoundException e) {
+					JOptionPane.showMessageDialog(c.userinferface.code_text_area, input_file_format+"file could not found");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				c.userinferface.validation_label.setText(c.canvasjobs.installSvg(c.userinferface.code_text_area.getText()));
+				//	Data.load_from_text=true;
+				//	Data.load_text_name=c.userinferface.fc_load.getSelectedFile().getAbsolutePath();
+			}
+//			else{
+//				JOptionPane.showMessageDialog(c.userinferface.code_text_area,"Please save file first");
+//			}
+		//}
+	}// end of linkActivated
+
+}

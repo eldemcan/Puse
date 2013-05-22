@@ -1,0 +1,38 @@
+package userinterface;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.io.File;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
+import org.apache.batik.swing.JSVGCanvas;
+
+public class SeperateDisplay extends JFrame {
+
+	public JPanel contentPane;
+	public JSVGCanvas seperate_svg_display;
+	public JScrollPane seperate_svg_display_scroll_pane;
+
+	/**
+	 * Create the frame.
+	 */
+	public SeperateDisplay() {
+	//	setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		setBounds(100, 100, 536, 420);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		seperate_svg_display = new JSVGCanvas();
+//		File f = new File("wr2.svg");
+//		seperate_svg_display.setURI(f.toURI().toString());
+		seperate_svg_display_scroll_pane= new JScrollPane(seperate_svg_display); 
+		contentPane.add(seperate_svg_display_scroll_pane,BorderLayout.CENTER);
+		setContentPane(contentPane);
+	}
+
+}

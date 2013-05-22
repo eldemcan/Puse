@@ -1,0 +1,133 @@
+package Controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+
+import Svg.*;
+import userinterface.*;
+
+public class Control {
+	Svg canvasjobs;
+	Gui userinferface;
+
+	public Control(Gui tempgui,Svg tempsvg){
+
+		canvasjobs=(Svg) tempsvg;
+		userinferface=(Gui) tempgui;
+		userinferface.addcodetextListener(new TypeCode(this));
+		userinferface.addsaveListener(new SaveItem());
+		userinferface.addloadListener(new LoadItemToText());
+		userinferface.addsvgcanvasListener(new SvgMouseAction(this));
+		userinferface.addpopupactionListener(new ExportDiagram());
+		userinferface.addlinkactivationListener(new LinkActivation(this));
+		userinferface.addreferenceListener(new ReferenceAction(this));
+	}
+
+	public class BackAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+
+		}
+
+	}//Back action
+
+	public class SaveItem implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//In response to a button click:
+			int returnVal = userinferface.fc_save.showSaveDialog(userinferface.code_text_area);
+			if(returnVal==JFileChooser.APPROVE_OPTION){
+				String filename=userinferface.fc_save.getSelectedFile().getAbsolutePath();
+				canvasjobs.exp.Convert(Data.temp_output_svgfile_name,filename+".svg",".svg");
+				if(!filename.endsWith(".txt")){filename=filename+".txt";}
+				File file1 = new File(filename);
+
+				if(file1.exists()){
+					try
+					{
+						FileWriter fw = new FileWriter(file1);
+						fw.write(userinferface.code_text_area.getText());
+						fw.close();
+					}
+					catch(IOException ioe)
+					{
+						System.err.println("IOException: " + ioe.getMessage());
+					}
+				}//if
+
+				else{
+					FileWriter fw=null;
+					try {
+						fw = new FileWriter(file1.getAbsoluteFile(), true);
+						userinferface.code_text_area.write(fw);
+					} catch (IOException en) {
+						System.out.println("could not save the file");
+					}
+				}//else
+				Data.browse_file_names.push(userinferface.fc_save.getSelectedFile().getAbsolutePath());
+			}
+		}
+	}// end of saveitem class 
+
+	public class LoadItemToText implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			int return_val=userinferface.fc_load.showOpenDialog(userinferface.code_text_area);
+			if(return_val==JFileChooser.APPROVE_OPTION){
+				try {
+					userinferface.code_text_area.read(new BufferedReader(new FileReader(userinferface.fc_load.getSelectedFile().getAbsolutePath())), null);
+					userinferface.validation_label.setText(canvasjobs.installSvg(userinferface.code_text_area.getText()));
+					canvasjobs.reload(userinferface.svgcanvas,Data.temp_output_svgfile_name);
+					//Data.load_from_text=true;
+					Data.browse_file_names.push(userinferface.fc_load.getSelectedFile().getAbsolutePath());
+				} catch (FileNotFoundException en) {
+					System.out.println("could not find svg file");
+				} catch (IOException en) {
+					System.out.println("could not load the file");
+				}
+			}
+		}
+	}//end of LoadItemToText 
+
+	public class ExportDiagram implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			int return_val=userinferface.fc_export.showSaveDialog(userinferface.svgcanvas);
+			if(return_val==JFileChooser.APPROVE_OPTION){
+				//System.out.println("eldem: "+userinferface.svgcanvas.getSVGDocument().getLocalName()); -gets file name
+				//System.out.println("eldem: "+userinferface.svgcanvas.getSVGDocument().getDocumentURI());
+
+				String input_file_format=Data.pruneFilePath(userinferface.svgcanvas.getSVGDocument().getDocumentURI());
+
+				String output_file_format=userinferface.fc_export.getSelectedFile().getAbsolutePath();
+				String file_format_option=userinferface.fc_export.getFileFilter().getDescription();
+				if(!output_file_format.endsWith(".png") && file_format_option.equalsIgnoreCase(".png")){
+					output_file_format=output_file_format+".png";
+				}
+				else if(!output_file_format.endsWith(".jpg") && file_format_option.equalsIgnoreCase(".jpg")){
+					output_file_format=output_file_format+".jpg";
+				}
+				else if(!output_file_format.endsWith(".svg") && file_format_option.equalsIgnoreCase(".svg")){
+					output_file_format=output_file_format+".svg";
+				}
+				canvasjobs.exp.Convert(input_file_format,output_file_format,userinferface.fc_export.getFileFilter().getDescription());
+				System.out.println(userinferface.svgcanvas.getURI());
+			}
+		}
+
+	}//end of export diagram
+
+}//end of control class

@@ -1,0 +1,57 @@
+
+package userinterface;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
+import org.apache.batik.swing.JSVGCanvas;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+
+/*
+ * Provides a separate screen for displaying sequence diagrams in case user changes Preferences
+ */
+public class SeperateDisplay extends JFrame {
+
+	public JPanel contentPane;
+	public JSVGCanvas seperate_svg_display;
+	
+	/** The seperate_svg_display_scroll_pane. */
+	public JScrollPane seperate_svg_display_scroll_pane;
+	private JPanel menu_bar;
+	private JButton seperate_display_backbtn;
+
+	/**
+	 * Create the frame.
+	 */
+	public SeperateDisplay() {
+		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 536, 420);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		seperate_svg_display = new JSVGCanvas();
+		seperate_svg_display_scroll_pane= new JScrollPane(seperate_svg_display); 
+		contentPane.add(seperate_svg_display_scroll_pane,BorderLayout.CENTER);
+		
+		menu_bar = new JPanel();
+		seperate_svg_display_scroll_pane.setColumnHeaderView(menu_bar);
+		
+		seperate_display_backbtn = new JButton("");
+		seperate_display_backbtn.setIcon(new ImageIcon(SeperateDisplay.class.getResource("/icons/1363206701_import.png")));
+		menu_bar.add(seperate_display_backbtn);
+		setContentPane(contentPane);
+	}
+	
+	public void addseperatebackbuttonListener(ActionListener e){
+		seperate_display_backbtn.addActionListener(e);
+	}
+}

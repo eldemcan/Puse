@@ -1,0 +1,7 @@
+package Svg;
+
+public class Data {
+
+	public static String temp_output_svgfile_name="tempout.svg";
+	
+}

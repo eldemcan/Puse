@@ -1,0 +1,8 @@
+package Svg;
+
+public class Data {
+
+	public static String temp_output_svgfile_name="tempout.svg";
+	public static String left_menu_item_information="listdata.txt";
+	public static boolean open_ref_new_window=false;
+}

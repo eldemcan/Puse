@@ -1,0 +1,218 @@
+package userinterface;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.Insets;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextPane;
+import java.awt.Rectangle;
+import java.awt.FlowLayout;
+import java.awt.Label;
+import javax.swing.BoxLayout;
+import javax.xml.ws.handler.MessageContext.Scope;
+
+import java.awt.Button;
+import java.awt.List;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+
+import org.apache.batik.swing.JSVGCanvas;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rtextarea.RTextScrollPane;
+
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.RowSpec;
+import net.miginfocom.swing.MigLayout;
+import java.awt.CardLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JRadioButtonMenuItem;
+
+import Controller.Control;
+import Svg.*;
+import Controller.*;
+
+
+public class Gui extends JFrame {
+
+	public JPanel contentPane;
+	public JSVGCanvas svgcanvas;
+	public JScrollPane svgpane;
+	public JMenuBar menuBar;
+	public JMenu mnFile;
+	public JMenuItem menuitem_new;
+	public JMenuItem menuitem_save;
+	public JMenuItem menuitem_load;
+	public JMenu mnPreferences;
+	public JRadioButtonMenuItem rdbtnmntmOpenInNew;
+	public JPanel top_element_panel;
+	public JPanel top_button_panel;
+	public JButton colour_button;
+	public JButton reference_button;
+	public JButton note_button;
+	public JButton comment_button;
+	public JLabel validation_label;
+	public JPanel left_list_panel;
+	public JList list;
+	public JScrollPane listpane;
+	public RSyntaxTextArea code_text_area;
+	public RTextScrollPane code_text_pane;
+	public Svg svgjobs;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Svg svg_model= new Svg();
+					
+					Gui frame = new Gui(svg_model);
+					frame.setVisible(true);
+					Control control = new Control(frame,svg_model);
+				} catch (Exception e) {
+					System.out.println("could not load the user interface ");
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Gui(Svg temp) {
+		svgjobs=temp;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 611);
+
+
+		svgcanvas = new JSVGCanvas();
+		svgpane = new JScrollPane(svgcanvas);
+		menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+
+		menuitem_new = new JMenuItem("New");
+		menuitem_new.setIcon(new ImageIcon(Gui.class.getResource("/icons/1362784517_document-new.png")));
+		mnFile.add(menuitem_new);
+
+		menuitem_save = new JMenuItem("Save");
+		menuitem_save.setIcon(new ImageIcon(Gui.class.getResource("/icons/1362784520_Save.png")));
+		mnFile.add(menuitem_save);
+
+		menuitem_load = new JMenuItem("Load");
+		menuitem_load.setIcon(new ImageIcon(Gui.class.getResource("/icons/1362784627_folderopen1.png")));
+		mnFile.add(menuitem_load);
+
+		mnPreferences = new JMenu("Preferences");
+		menuBar.add(mnPreferences);
+
+		rdbtnmntmOpenInNew = new JRadioButtonMenuItem("Open in new window");
+		mnPreferences.add(rdbtnmntmOpenInNew);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(5, 0));
+
+		top_element_panel = new JPanel();
+		contentPane.add(top_element_panel, BorderLayout.NORTH);
+		top_element_panel.setLayout(new BoxLayout(top_element_panel, BoxLayout.Y_AXIS));
+
+		top_button_panel = new JPanel();
+		top_element_panel.add(top_button_panel);
+
+		colour_button = new JButton("");
+		colour_button.setToolTipText("add colour");
+		colour_button.setIcon(new ImageIcon(Gui.class.getResource("/icons/coloricon.png")));
+		top_button_panel.add(colour_button);
+
+		reference_button = new JButton("");
+		reference_button.setIcon(new ImageIcon(Gui.class.getResource("/icons/refico.png")));
+		reference_button.setToolTipText("refer to other diagram ");
+		top_button_panel.add(reference_button);
+
+		note_button = new JButton("");
+		note_button.setToolTipText("add note to diagram ");
+		note_button.setIcon(new ImageIcon(Gui.class.getResource("/icons/1361839538_stock_insert-note.png")));
+		top_button_panel.add(note_button);
+
+		comment_button = new JButton("");
+		comment_button.setToolTipText("add comment to code");
+		comment_button.setIcon(new ImageIcon(Gui.class.getResource("/icons/1362784127_24-comment-square.png")));
+		top_button_panel.add(comment_button);
+
+
+		validation_label = new JLabel("New label");
+		top_element_panel.add(validation_label);
+
+		left_list_panel = new JPanel();
+		contentPane.add(left_list_panel, BorderLayout.WEST);
+		left_list_panel.setLayout(new GridLayout(0, 1, 0, 0));
+
+
+
+		list = new JList();
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {"fdsf", "dsfds", "fds", "fds", "fsdf", "fdsf", "dsfds", "fds", "fds", "fsdf", "fdsf", "dsfds", "fds", "fds", "fsdf", "fdsf", "dsfds", "fds", "fds", "fsdf", "fdsf", "dsfds", "fds", "fds", "fsdf", "fdsf", "dsfds", "fds", "fds", "fsdf"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+
+		listpane=new JScrollPane(list);
+		left_list_panel.add(listpane);
+		contentPane.add(svgpane,BorderLayout.SOUTH);
+		code_text_area = new RSyntaxTextArea(20,60);
+		code_text_pane = new RTextScrollPane(code_text_area);
+		code_text_area.setCodeFoldingEnabled(true);
+		code_text_area.setAntiAliasingEnabled(true);
+		AutoComplete complete = new AutoComplete(code_text_area);
+		complete.installGrammer("autocompletewords.txt");
+		contentPane.add(code_text_pane, BorderLayout.CENTER);
+		 
+
+	}//end of  constructor
+
+
+	public void addcodetextListener(KeyListener type){
+			code_text_area.addKeyListener(type);
+	}	
+
+
+}//end of class 

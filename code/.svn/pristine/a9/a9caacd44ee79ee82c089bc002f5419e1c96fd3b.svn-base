@@ -1,0 +1,85 @@
+package Controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import userinterface.RefGui;
+
+import Controller.Control.LoadItemToText;
+import Svg.Data;
+
+public class ReferenceAction implements ActionListener {
+
+	Control c;
+	public ReferenceAction(Control temp) {
+		c = temp ;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		int returnVal= c.userinferface.fc_reference.showOpenDialog(c.userinferface.code_text_area);
+
+		if(returnVal==JFileChooser.APPROVE_OPTION){
+			c.userinferface.ref_screen.setVisible(true);
+//			c.userinferface.ref_screen.btnAddReference.addActionListener(new ActionListener() {
+//
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					String 	Object_name=c.userinferface.ref_screen.ref_object_name.getText().trim();
+//					String ref_message="";
+//					if(	Object_name==null || 	Object_name.equals("")){
+//						Object_name="Object 1";
+//					}
+//
+//					if(c.userinferface.ref_screen.rdbtnNewRadioButton.isSelected()){// Ref On Object is selected
+//
+//						// participant "Alice\n<u>[[http://www.foo.com Some link]]" as Alice
+//						String link="";
+//						try {
+//
+//							link = "[["+c.userinferface.fc_reference.getSelectedFile().toURL()+" "+c.userinferface.fc_reference.getSelectedFile().getName()+"]]";
+//						} catch (MalformedURLException e1) {
+//							System.out.println("problem creating link");
+//						}
+//						ref_message="participant "+" \" "+Object_name.trim()+" &<u>"+link+"\" as "+Object_name.trim();
+//
+//						String code=c.userinferface.code_text_area.getText();
+//						if(code.contains("@startuml")){
+//							code=code.replaceFirst("@startuml","@startuml\n"+ref_message);
+//							code=code.replace("&","\\n");
+//						}
+//						ref_message="";
+//
+//						c.userinferface.code_text_area.setText(code);
+//					}
+//					else{
+//						String link="";
+//						try {
+//							link = "[["+c.userinferface.fc_reference.getSelectedFile().toURL()+" "+c.userinferface.fc_reference.getSelectedFile().getName()+"]]";
+//						} catch (MalformedURLException e1) {
+//							System.out.println("problem creating link");
+//						}
+//						ref_message="ref over "+Object_name.trim()+" : init"+link;
+//						int get_position=c.userinferface.code_text_area.getCaretPosition();
+//
+//						if(get_position>0){
+//							c.userinferface.code_text_area.insert( ref_message,c.userinferface.code_text_area.getCaretPosition());
+//						}
+//						else{
+//							c.userinferface.code_text_area.append( ref_message);
+//						}
+//					}//else 
+//					c.canvasjobs.reload(c.userinferface.svgcanvas,Data.temp_output_svgfile_name);
+//					c.userinferface.ref_screen.dispose();
+//				}
+//			});//end of action
+		}//approve
+	}
+
+}

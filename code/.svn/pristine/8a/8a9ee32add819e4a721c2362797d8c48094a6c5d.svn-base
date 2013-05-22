@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <a xlink:href="ref1.svg">
+        <text x="10" y="20">/svg/index.html</text>
+    </a>
+
+    <a xlink:href="ref1.svg" xlink:show="new">
+        <text x="10" y="40">/svg/index.html
+         (xlink:show="new")</text>
+    </a>
+
+    <a xlink:href="ref1.svg" xlink:show="replace">
+        <text x="10" y="60">/svg/index.html
+         (xlink:show="replace")</text>
+    </a>
+
+    <a xlink:href="ref1.svg" target="_blank">
+        <text x="10" y="80">m/svg/index.html
+         (target="_blank")</text>
+    </a>
+
+    <a xlink:href="ref1.svg" target="_top">
+        <text x="10" y="100">/svg/index.html
+         (target="_top")</text>
+    </a>
+
+</svg>

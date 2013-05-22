@@ -1,0 +1,16 @@
+Sync Message*'write autonumber here if you like them to be numbered'?Actor1 -> Actor2: write message here
+Loop*loop write condition here?Actor1 -> Actor2: write message here?end
+ASync Message*Actor1 ->> Actor2: write message here
+Self Message*Actor1 -> Actor1: write work here activate B #FFBBBB
+Alternative*alt Success?do action in case if success?else failed?do action in case of failure?end
+Split*newpage 'A title for the\nlast page'
+Group*group label for group? 'things to put here'?end
+Divider*== Put Message Here ==
+Delay*...x minutes later...
+Space*|||
+Activation*activate Actor 'Actor or object name'
+Deactivate*Deactivate Actor 'Actor or object name'
+Destroy*destroy Actor 'The destroy denote the end of the life line of a participant'
+Incoming message*[-> Object: Message Here 
+Outgoing message*Object ->] : Message Here 
+Participants englober* box "title for box" #LightBlue?'put object and messages here'?end box

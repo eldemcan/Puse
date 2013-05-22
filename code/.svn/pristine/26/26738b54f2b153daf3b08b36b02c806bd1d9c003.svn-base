@@ -1,0 +1,23 @@
+package userinterface;
+
+public class draweritem {
+
+	String name;
+	String description;
+	
+	public draweritem() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	draweritem(String name, String description){
+		this.name=name;
+		this.description=description;
+	}
+	
+	@Override
+	public String toString() {
+	
+		return name;
+	}
+	
+}// end of class 

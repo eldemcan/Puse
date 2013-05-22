@@ -1,0 +1,40 @@
+package Controller;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import Svg.Data;
+
+public class TypeCode implements KeyListener {
+
+	Control c;
+
+	public TypeCode(Control temp) {
+		c=temp;
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		String code=c.userinferface.code_text_area.getText().trim();
+		String validationtext=c.canvasjobs.installSvg(code);
+		if(validationtext.equalsIgnoreCase(" ")){
+			c.userinferface.validation_label.setText(validationtext);
+		}
+		else{
+			c.userinferface.svgcanvas=c.canvasjobs.reload(c.userinferface.svgcanvas,Data.temp_output_svgfile_name);
+			c.userinferface.validation_label.setText(validationtext);
+		}
+	}
+
+}//end of class 

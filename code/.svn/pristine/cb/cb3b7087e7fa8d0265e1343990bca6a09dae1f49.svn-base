@@ -1,0 +1,137 @@
+package Svg;
+
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.List;
+
+import org.apache.batik.swing.JSVGCanvas;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.syntax.SyntaxChecker;
+import net.sourceforge.plantuml.syntax.SyntaxResult;
+
+/**
+ * The Class conducts operations for svg file 
+ */
+public class Svg {
+
+	SourceStringReader reader;  /**< for reading svg file */
+	ByteArrayOutputStream os;  /**< for writing svg file */
+	FileFormatOption f_option;  /**< file format */
+
+
+	/** The exp. */
+	public Exporter exp=new Exporter();
+
+	/**
+	 * Creates svg file from string, it validates code and creates svg 
+	 *
+	 * @param code the code
+	 * @return the string
+	 */
+	public String installSvg(String code){
+
+		code=code.replaceAll ("^[ |\t]*\n$", "");
+		code=code.trim();
+
+		if(code.contains("@startuml") && Data.remove_footer==true){
+			code=code.replaceFirst("@startuml","@startuml \nhide footbox");
+			System.out.println("footer deleted");
+		}//preference 
+
+		reader = new SourceStringReader(code);
+		System.out.println(code);
+		os = new ByteArrayOutputStream();
+		f_option = new FileFormatOption(FileFormat.SVG); 
+		String validationmessage="";
+		String svg="";
+
+		try {
+			validationmessage=reader.generateImage(os,f_option);
+			System.out.println("validation message is:"+validationmessage);
+			// The XML is stored into svg
+			svg = new String(os.toByteArray());
+		} catch (IOException e) {
+			System.out.println("could not generate the image");
+			validationmessage="error could not generate the image";
+		}
+
+		if(validationmessage==null){
+			if(code.contains("@startuml")==false || code.contains("@enduml")==false){
+				validationmessage="Please use @startuml and @enduml tags";
+			}
+			return validationmessage;
+		}
+
+
+		else{ //validation message is:(Error)
+
+			SyntaxResult result=SyntaxChecker.checkSyntax(code); 
+			// System.out.println("syntax result:"+result.getDescription()); // this could be null when there is a error
+			// System.out.println("error position:"+result.getErrorLinePosition()); gives line of error
+			System.out.println("errors"+result.getErrors());
+			//	System.out.println("type:"+result.getUmlDiagramType()); error olunca type gelmiyor
+			//	List<String> suggest=result.getSuggest();
+			//	System.out.println("suggestions:"+suggest.toString());
+
+			if(result.getErrors().size()>0){
+				validationmessage=result.getErrors()+" Please look line:"+result.getErrorLinePosition();
+			}
+			else{
+				try {
+					FileWriter fstream = new FileWriter(Data.temp_output_svgfile_name);
+					BufferedWriter wr = new BufferedWriter(fstream);
+					wr.write(svg);
+					wr.close();
+					//reload(Data.temp_output_svgfile_name);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					os.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}// no error
+
+			//validation message is:(2 participants) 
+			//syntax result:(2 participants)
+
+			//SyntaxResult result=SyntaxChecker.checkSyntax(code); 
+			// System.out.println("syntax result:"+result.getDescription()); // this could be null when there is a error
+			// System.out.println("error position:"+result.getErrorLinePosition()); gives line of error
+			//System.out.println("errors"+result.getErrors());
+			//	System.out.println("type:"+result.getUmlDiagramType()); error olunca type gelmiyor
+			//List<String> suggest=result.getSuggest();
+			return validationmessage;		
+		}//else not null for validation
+	}//end of displaysvg
+
+	/**
+	 * Reload svg file to canvas 
+	 *
+	 * @param svgCanvas component name
+	 * @param name the name of file which will be loaded 
+	 * @return the jSVG canvas is new canvas which will return
+	 */
+	public JSVGCanvas reload(JSVGCanvas svgCanvas,String name){
+
+		File f = new  File(name);
+		try {
+			svgCanvas.setURI(f.toURL().toString());
+			System.out.println("reload is complete");
+		} catch (MalformedURLException e) {
+			System.out.println("could not load the svg");
+		}
+		return svgCanvas;
+	}//end of re-load
+
+}//end of class

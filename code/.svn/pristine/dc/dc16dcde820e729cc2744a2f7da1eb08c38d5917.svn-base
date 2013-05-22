@@ -1,0 +1,17 @@
+package Controller;
+
+import Svg.*;
+import userinterface.*;
+
+public class Control {
+	Svg canvasjobs;
+	Gui userinferface;
+
+	public Control(Gui tempgui,Svg tempsvg){
+
+		canvasjobs=(Svg) tempsvg;
+		userinferface=(Gui) tempgui;
+		userinferface.addcodetextListener(new TypeCode(this));
+	}
+
+}

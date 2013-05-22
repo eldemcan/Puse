@@ -1,0 +1,34 @@
+package Controller;
+
+import org.apache.batik.swing.svg.LinkActivationEvent;
+import org.apache.batik.swing.svg.LinkActivationListener;
+
+import Svg.Data;
+
+public class LinkActivation implements LinkActivationListener {
+
+	Control c;
+
+	public LinkActivation(Control temp) {
+		c = temp ;
+	}
+
+	@Override
+	public void linkActivated(LinkActivationEvent arg0) {
+		String clicked_link=arg0.getReferencedURI();
+		
+	
+		if(clicked_link.startsWith("file:/")){
+			clicked_link=clicked_link.replaceFirst("file:/",""); // this could be different for linux watch out please
+		}
+		else if(clicked_link.startsWith("file:\\")){
+			clicked_link=clicked_link.replaceFirst("file:\\","");  
+		}
+		if(Data.open_ref_new_window){
+			System.out.println("anne marie:"+clicked_link);
+			c.canvasjobs.reload(c.userinferface.linkwindow.seperate_svg_display,clicked_link);
+			c.userinferface.linkwindow.setVisible(true);
+		}//if
+	}// end of linkActivated
+
+}

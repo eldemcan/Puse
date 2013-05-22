@@ -1,0 +1,25 @@
+package Svg;
+
+import java.util.Stack;
+
+public class Data {
+
+	public static String temp_output_svgfile_name="tempout.svg";
+	public static String left_menu_item_information="listdata.txt";
+	public static boolean open_ref_new_window=false;
+ 	public static boolean is_saved=false;
+	public static Stack<String> browse_file_names = new Stack<String>();
+	public static boolean remove_footer=false;
+	
+	public static String pruneFilePath(String filename){
+
+		if(filename.startsWith("file:/")){
+			filename=filename.replaceFirst("file:/",""); // this could be different for linux watch out please
+		}
+		else if(filename.startsWith("file:\\")){
+			filename=filename.replaceFirst("file:\\","");  
+		}
+
+		return filename;
+	}
+}

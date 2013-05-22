@@ -1,0 +1,106 @@
+package Svg;
+
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.batik.swing.JSVGCanvas;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.syntax.SyntaxChecker;
+import net.sourceforge.plantuml.syntax.SyntaxResult;
+
+public class Svg {
+
+	SourceStringReader reader;
+	ByteArrayOutputStream os;
+	FileFormatOption f_option;
+	public Exporter exp=new Exporter();
+
+	public String installSvg(String code){
+
+		if(code.contains("@startuml") && Data.remove_footer==true){
+			code=code.replaceFirst("@startuml","@startuml \nhide footbox");
+			System.out.println("footer deleter***");
+		}
+
+		reader = new SourceStringReader(code.trim());
+		System.out.println(code);
+		os = new ByteArrayOutputStream();
+		f_option = new FileFormatOption(FileFormat.SVG); 
+		String validationmessage="";
+		String svg="";
+
+		SyntaxChecker checker = new SyntaxChecker();
+
+		try {
+			validationmessage=reader.generateImage(os,f_option);
+			System.out.println("validation message is:"+validationmessage);
+			// The XML is stored into svg
+			svg = new String(os.toByteArray());
+		} catch (IOException e) {
+			System.out.println("could not generate the image");
+			validationmessage="error could not generate the image";
+		}
+
+		if(validationmessage==null){
+			validationmessage=" ";
+			return validationmessage;
+		}
+		//
+		//		else if((validationmessage.contains("error") || validationmessage.contains("ERROR"))){
+		//			return validationmessage;
+		//		}//if
+
+		else{
+			System.out.println("here");
+			SyntaxResult result=checker.checkSyntax(code);
+			System.out.println("here1");
+			System.out.println(result.getDescription());
+			System.out.println("aaaaa");
+			List<String> suggest=result.getSuggest();
+
+			try {
+				FileWriter fstream = new FileWriter(Data.temp_output_svgfile_name);
+				BufferedWriter wr = new BufferedWriter(fstream);
+				wr.write(svg);
+				wr.close();
+				//reload(Data.temp_output_svgfile_name);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				os.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return validationmessage;		
+		}//else
+	}//end of displaysvg
+
+	public JSVGCanvas reload(JSVGCanvas svgCanvas,String name){
+
+		File f = new  File(name);
+		try {
+			svgCanvas.setURI(f.toURL().toString());
+			System.out.println("reload is complete");
+		} catch (MalformedURLException e) {
+			System.out.println("could not load the svg");
+		}
+		return svgCanvas;
+	}//end of reaload
+
+	public void saveText(){
+
+	}
+
+}//end of class

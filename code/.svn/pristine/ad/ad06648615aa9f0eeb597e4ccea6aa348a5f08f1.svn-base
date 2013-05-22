@@ -1,0 +1,39 @@
+package Svg;
+
+import java.util.Stack;
+/**
+ * 
+ * This class holds global variables 
+ * 
+ */
+public class Data {
+
+	public static String temp_output_svgfile_name="tempout.svg";   /**< this is temporary svg file created for displaying purpose */
+	public static String left_menu_item_information="listdata.txt";  /**< this file holds items for left menu */
+	public static boolean open_ref_new_window=false;  /**< preference information for opening diagram in new window */
+ 	public static boolean is_saved=false;  /**< holds the state whether current file is saved or not*/
+	public static Stack<String> browse_file_names = new Stack<String>();  /**< holds the file names for browsing purposes */
+//	public static Stack<String> browse_file_names_seperate = new Stack<String>();  /**< holds the file names for separate window */
+	public static boolean remove_footer=false;  /**< preference information for removing footer */
+	public static String currentfile;  /**< shows the current file  */
+	public static boolean incremental_model=false; /**< this is for link activation indicator in incremental model */
+	public static boolean incremental_model_link=false; /**< this is for link activation indicator in incremental model */
+	
+	/**
+	 * Formats string for operating system to open
+	 *
+	 *@see www.google.com
+	 * @param filename    is unformatted string 
+	 * @return            returns the formatted string 
+	 */
+	public static String pruneFilePath(String filename){
+
+		if(filename.startsWith("file:/")){
+			filename=filename.replaceFirst("file:/",""); // this is for linux
+		}
+		else if(filename.startsWith("file:\\")){   //this is for windows
+			filename=filename.replaceFirst("file:\\","");  
+		}
+		return filename;
+	}
+}

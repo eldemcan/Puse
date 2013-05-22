@@ -1,0 +1,46 @@
+package Controller;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+public class SvgMouseAction implements MouseListener{
+	
+	Control c;
+	
+	public SvgMouseAction(Control temp) {
+			c=temp;
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		if(arg0.isPopupTrigger()){
+			c.userinferface.Pmenu.show(arg0.getComponent(), arg0.getX(),arg0.getY());
+			System.out.println("hhhhhh");
+		}
+	}
+
+}

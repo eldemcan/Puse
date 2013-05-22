@@ -1,0 +1,75 @@
+package Controller;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
+import org.apache.batik.swing.svg.LinkActivationEvent;
+import org.apache.batik.swing.svg.LinkActivationListener;
+
+import Svg.Data;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LinkActivation.
+ */
+public class LinkActivation implements LinkActivationListener {
+
+	Control c;   /**<control object*/
+
+	/**
+	 * Instantiates a new link activation.
+	 *
+	 * @param temp the control object assginment 
+	 */
+	public LinkActivation(Control temp) {
+		c = temp ;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.batik.swing.svg.LinkActivationListener#linkActivated(org.apache.batik.swing.svg.LinkActivationEvent)
+	 * this part works when user clicks a link on canvas 
+	 */
+	@Override
+	public void linkActivated(LinkActivationEvent arg0) {
+
+		String clicked_link=Data.pruneFilePath(arg0.getReferencedURI());
+
+		if(Data.open_ref_new_window){
+			
+			c.canvasjobs.reload(c.userinferface.linkwindow.seperate_svg_display,clicked_link);
+			c.userinferface.linkwindow.setVisible(true);
+
+		}//if
+		else{
+
+	//		if(Data.is_saved==true){
+				c.userinferface.back_button.setEnabled(true);
+				String input_file_format=null;
+				try {
+					input_file_format=Data.pruneFilePath(arg0.getReferencedURI().replace(".svg",".txt"));
+					c.userinferface.code_text_area.read(new BufferedReader(new FileReader(input_file_format)), null);
+				} catch (FileNotFoundException e) {
+					JOptionPane.showMessageDialog(c.userinferface.code_text_area, input_file_format+"file could not found");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				c.userinferface.validation_label.setText(c.canvasjobs.installSvg(c.userinferface.code_text_area.getText()));
+				//String current_file=Data.pruneFilePath(c.userinferface.svgcanvas.getSVGDocument().getDocumentURI());
+				//Data.browse_file_names.push(current_file);
+				//System.out.println(Data.browse_file_names.toString());
+				//	Data.load_from_text=true;
+				//	Data.load_text_name=c.userinferface.fc_load.getSelectedFile().getAbsolutePath();
+			}
+//			else{
+//				JOptionPane.showMessageDialog(c.userinferface.code_text_area,"Please save file first");
+//			}
+		//}
+	}// end of linkActivated
+
+}// end of class
