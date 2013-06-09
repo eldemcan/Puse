@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node3" href="$class_controller_1_1_add_noteaction.html" title="Controller.AddNoteaction" alt="" coords="175,5,342,32"/>
+<area shape="rect" id="node5" href="$class_controller_1_1_control_1_1_back_button_listener.html" title="Controller.Control.BackButton\lListener" alt="" coords="161,57,356,98"/>
+<area shape="rect" id="node7" href="$class_controller_1_1_control_1_1_dynamic_ref.html" title="Controller.Control.DynamicRef" alt="" coords="161,123,357,149"/>
+<area shape="rect" id="node9" href="$class_controller_1_1_control_1_1_export_diagram.html" title="Controller.Control.Export\lDiagram" alt="" coords="177,174,341,215"/>
+<area shape="rect" id="node11" href="$class_controller_1_1_control_1_1_generate_links.html" title="Controller.Control.Generate\lLinks" alt="" coords="169,239,348,281"/>
+<area shape="rect" id="node13" href="$class_controller_1_1_control_1_1_load_item_to_text.html" title="Controller.Control.LoadItem\lToText" alt="" coords="169,305,348,346"/>
+<area shape="rect" id="node15" href="$class_controller_1_1_control_1_1_save_item.html" title="Controller.Control.SaveItem" alt="" coords="169,371,348,397"/>
+<area shape="rect" id="node17" href="$class_controller_1_1_reference_action.html" title="Controller.ReferenceAction" alt="" coords="171,421,347,448"/>
+</map>
