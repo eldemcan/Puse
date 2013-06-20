@@ -55,11 +55,13 @@ import java.awt.List;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 
+import org.apache.batik.ext.awt.image.URLImageCache;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.svg.LinkActivationListener;
 import org.apache.batik.swing.svg.SVGDocumentLoaderEvent;
 import org.apache.batik.swing.svg.SVGDocumentLoaderListener;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import java.awt.Color;
@@ -69,7 +71,11 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
+
+
 import net.miginfocom.swing.MigLayout;
+import net.sourceforge.plantuml.Url;
+
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -81,6 +87,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager.*;
@@ -129,12 +136,13 @@ public class Gui extends JFrame {
 	public JButton save_button;
 	public JLabel filename_label;
 	public JCheckBoxMenuItem chckbxmntmIncrementalModel;
-
+ 
 
 	public static void main(String[] args) {
+		 SplashScreen splash = new SplashScreen(1000);
+		 splash.showSplashAndExit();		 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					Svg svg_model= new Svg();
@@ -150,13 +158,17 @@ public class Gui extends JFrame {
 					}   
 				}
 			}
+
 		});
+		
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public Gui(Svg temp) {
+	 
+	
 		svgjobs=temp;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 611);
@@ -247,7 +259,7 @@ public class Gui extends JFrame {
 		mnPreferences.add(rdbtnmntmOpenInNew);
 		chckbxmntmRemove = new JCheckBoxMenuItem("Remove Footer");
 		mnPreferences.add(chckbxmntmRemove);
-		
+
 		chckbxmntmIncrementalModel = new JCheckBoxMenuItem("Incremental Model");
 		chckbxmntmIncrementalModel.setEnabled(false);
 		chckbxmntmIncrementalModel.addActionListener(new ActionListener() {
@@ -382,7 +394,8 @@ public class Gui extends JFrame {
 
 			}
 		});
-
+		 
+		
 	}//end of  constructor
 
 	public void addrightmenutocodeListener(MouseListener e){
