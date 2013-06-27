@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<!--
+Taken from Google I/O 2011 HTML slides template
+
+Authors: Luke Mahé (code)
+Marcin Wichary (code and design)
+Dominic Mazzoni (browser compatibility)
+Charles Chen (ChromeVox support)
+Michael Brunton-Spall (Lightning talk support)
+
+Original URL: http://code.google.com/p/io-2011-slides/
+URL: http://github.com/bruntonspall/html5-slides/
+-->
+
+<html>
+  <head>
+    <title>Open ID in 5 minutes</title>
+
+    <meta charset='utf-8' />
+    <script src='../slides.js'></script>
+  </head>
+
+  <style>
+    /* Your individual styles here, or just use inline styles if that’s
+    what you want. */
+    article.biglogo {
+      background: white url(../images/MiB-logo-man.png) 50% 50% no-repeat;
+    }
+
+  </style>
+
+  <body style='display: none'>
+    <!-- This is the lightning timer, it autoadvances slides every 15 seconds -->
+    <div id="timer" class="floating">5:00</div>
+
+    <section class='slides layout-regular'>
+
+    <!-- Your slides (<article>s) go here. Delete or comment out the
+    slides below. -->
+
+
+    <article>
+    <h1>
+      Open ID in 5 minutes
+    </h1>
+    <p>
+    Michael Brunton-Spall
+    <br>
+    Nov 18, 2011
+    </p>
+    </article>
+
+    <article>
+    <h3>
+      An Overview 
+    </h3>
+    <ul>
+      <li>Allows a "Relying Party" to identify a User with an OpenId Provider</li>
+      <li>It does this with the liberal application of RFC's and XML</li>
+      <li>Actually easy to implement</li>
+      <li>Has a few gotchas</li>
+    </ul>
+    </article>
+    <article class="smaller">
+    <h3>The Spec</h3>
+    <ul>
+      <li>The end user initiates authentication by presenting a User-Supplied Identifier to the Relying Party via their User-Agent</li>
+      <li>After normalizing the User-Supplied Identifier, the Relying Party performs discovery on it and establishes the OP Endpoint URL that the end user uses for authentication. It should be noted that the User-Supplied Identifier may be an OP Identifier, as discussed in Section 7.3.1, which allows selection of a Claimed Identifier at the OP or for the protocol to proceed without a Claimed Identifier if something else useful is being done via an extension</li>
+      <!--          <li>(optional) The Relying Party and the OP establish an association -- a shared secret established using Diffie-Hellman Key Exchange [RFC2631]. The OP uses an association to sign subsequent messages and the Relying Party to verify those messages; this removes the need for subsequent direct requests to verify the signature after each authentication request/response</li> -->
+      <li>The Relying Party redirects the end user's User-Agent to the OP with an OpenID Authentication request</li>
+      <li>The OP establishes whether the end user is authorized to perform OpenID Authentication and wishes to do so. The manner in which the end user authenticates to their OP and any policies surrounding such authentication is out of scope for this document</li>
+      <li>The OP redirects the end user's User-Agent back to the Relying Party with either an assertion that authentication is approved or a message that authentication failed</li>
+      <li>The Relying Party verifies the information received from the OP including checking the Return URL, verifying the discovered information, checking the nonce, and verifying the signature by using either the shared key established during the association or by sending a direct request to the OP</li>
+    </ul>
+    </article>
+    <article class="fill">
+    <h3>Simples yes?</h3>
+    <p>
+    <img class="centered" style="height: 500px" src="images/meercat.jpg">
+    </p>
+    <div class='source white'>
+      Source: http://www.flickr.com/photos/finofilka/2529342466
+    </div>
+    </article>
+    <article>
+    <h3>The Flow</h3>
+    <p>
+    <img class="centered" style="height: 500px" src="images/OpenId.png">
+    </p>
+    <div class='source white'>
+      Source: Michael Brunton-Spall
+    </div>
+    </article>
+    <article>
+    <h3>Start</h3>
+    <ul>
+      <li>The end user presents a User-Supplied Identifier to Relying Party via their User-Agent</li>
+      <li>Relying Party = You</li>
+      <li>their User-Agent = the browser</li>
+      <li>User-Supplied Identifier?
+      <ul>
+        <li>michael@brunton-spall.co.uk = webfinger</li>
+        <li>http://michael.brunton-spall.co.uk</li>
+        <li>https://www.google.com/accounts/o8/id</li>
+      </ul>
+      </li>
+    </ul>
+    </article>
+    <article>
+    <h3>Perform Discovery</h3>
+    <ul>
+      <li>Perform discovery</li>
+      <li>Probably out of scope here</li>
+      <li>Essentially hit the endpoint get XRDS endpoint, look for URL in it</li>
+    </ul>
+    </article>
+    <article>
+    <h3>XRDS? XML? OMGWTFBBQ?</h3>
+    <pre>
+        <![CDATA[
+        &lt;?xml version="1.0" encoding="UTF-8"?>
+        &lt;xrds:XRDS xmlns:xrds="xri://$xrds" xmlns="xri://$xrd*($v*2.0)">
+          &lt;XRD>
+          &lt;Service priority="0">
+          &lt;Type>http://specs.openid.net/auth/2.0/server&lt;/Type>
+          &lt;Type>http://openid.net/srv/ax/1.0&lt;/Type>
+          &lt;Type>http://specs.openid.net/extensions/ui/1.0/mode/popup&lt;/Type>
+          &lt;Type>http://specs.openid.net/extensions/ui/1.0/icon&lt;/Type>
+          &lt;Type>http://specs.openid.net/extensions/pape/1.0&lt;/Type>
+          &lt;URI>https://www.google.com/accounts/o8/ud&lt;/URI>
+          &lt;/Service>
+          &lt;/XRD>
+        &lt;/xrds:XRDS>
+        ]]>
+        </pre>
+    <p>This tells you to hit https://www.google.com/accounts/o8/ud</p>
+    </article>
+    <article>
+    <h3>Establish an Association</h3>
+    <ul>
+      <li>You probably wont do this</li>
+      <li>It means you can skip verification later by using signatures</li>
+      <li>It's easier to just verify TBH</li>
+    </ul>
+    </article>
+    <article>
+    <h3>Redirect User to OP with auth request</h3>
+    <ul>
+      <li>settings are all namespaced openid.xxx</li>
+      <li>Endpoint you got from the XRDS document</li>
+      <table>
+        <tr>
+          <th>Argument</th>
+          <th>English</th>
+        </tr>
+        <tr>
+          <td>openid.ns</td>
+          <td>Required, XML Namespace</td>
+        </tr>
+        <tr>
+          <td>openid.mode</td>
+          <td>should be checkid_setup</td>
+        </tr>
+        <tr>
+          <td>openid.return_to</td>
+          <td>Your callback url at end of process</td>
+        </tr>
+      </table>
+      <li>Example URL: https://www.google.com/accounts/o8/id? openid.ns=http://specs.openid.net/auth/2.0& openid.return_to=http://www.example.com/checkauth& openid.mode=checkid_setup</li>
+    </ul>
+    </article>
+    <article>
+    <h3>User logs into the OP website</h3>
+    <ul>
+      <li>You don't control this</li>
+      <li>Log into Google, OpenId providers site</li>
+      <li>Asked to trust the referrer</li>
+    </ul>
+    </article>
+    <article>
+    <h3>OP redirects User-Agent back to return_url</h3>
+    <ul>
+      <li>You get a series of url parameters
+      <table>
+        <tr>
+          <th>Parameter</th>
+          <th>English</th>
+        </tr>
+        <tr>
+          <td>openid.mode</td>
+          <td>Should be id_res</td>
+        </tr>
+        <tr>
+          <td>openid.response_nonce</td>
+          <td>A nonce for the signature</td>
+        </tr>
+        <tr>
+          <td>openid.signed</td>
+          <td>What parameters were included in the signing</td>
+        </tr>
+        <tr>
+          <td>openid.identity</td>
+          <td>This is the identity you wanted</td>
+        </tr>
+        <tr>
+          <td>openid.sig</td>
+          <td>Signature for verification</td>
+        </tr>
+      </table>
+      </article>
+      <article>
+      <h3>The Relying Party verifies the information</h3>
+      <ul>
+        <li>If you made an association you can verify the signature
+        <li>More likely you make a call to OP's verify url
+        <li>set openid.mode=check_authentication
+        <li>Also copy all fields from the callback except openid.mode
+        <li>You get a response "is_valid=true" or "is_valid=false"
+      </ul>
+      </article>
+      <article>
+      <h3>But whats this identifier thing?</h3>
+      <ul>
+        <li>What is this: https://www.google.com/accounts/o8/id/id= ACyQatixLeLODscWvwqsCXWQ2sa3RRaBhaKTkcsvUElI6tNHIQ1_egX_wt1x3fAY983DpW4UQV_U
+        <li>It's a unique and consistent identifier
+        <li>You can use it internally everywhere
+        <li>But you might have expected something like michael@brunton-spall.co.uk
+        <li>So you can use an extension to get it
+      </ul>
+      </article>
+      <article>
+      <h3>How to request more attributes</h3>
+      <ul>
+        <li>OpenId Attribute Exchange
+        <li>When you make your openid.mode=checkid_setip
+        <li>Also add openid.ax.mode=fetch_request
+      </ul>
+      <table>
+        <tr>
+          <th>parameter</th>
+          <th>English</th>
+        </tr>
+        <tr>
+          <td>openid.ns.ax</td>
+          <td>Must be set to http://openid.net/srv/ax/1.0</td>
+        </tr>
+        <tr>
+          <td>openid.ax.mode</td>
+          <td>Set to fetch_request to get attributes</td>
+        </tr>
+        <tr>
+          <td>openid.ax.required</td>
+          <td>The attributes to request, country, email, firstname, lastname, language</td>
+        </tr>
+        <tr>
+          <td>openid.ax.type.*</td>
+          <td>A schema, e.g. http://axschema.org/contact/email for email</td>
+        </tr>
+      </tr>
+    </table>
+    </article>
+    <article>
+    <h3>What types are there?</h3>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Schema</th>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>http://axschema.org/contact/email</td>
+      </tr>
+      <tr>
+        <td>country</td>
+        <td>http://axschema.org/contact/country/home</td>
+      </tr>
+      <tr>
+        <td>firstname</td>
+        <td>http://axschema.org/namePerson/first</td>
+      </tr>
+      <tr>
+        <td>lastname</td>
+        <td>http://axschema.org/namePerson/last</td>
+      </tr>
+      <tr>
+        <td>language</td>
+        <td>http://axschema.org/pref/language</td>
+      </tr>
+    </table>
+    </article>
+    <article>
+    <h3>The Flow</h3>
+    <p>
+    <img class="centered" style="height: 500px" src="images/OpenId.png">
+    </p>
+    <div class='source white'>
+      Source: Michael Brunton-Spall
+    </div>
+    </article>
+
+    <article>
+    <h1>
+      Thanks
+    </h1>
+    </article>
+    </section>
+  </body>
+</html>
