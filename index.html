@@ -1,134 +1,419 @@
 <!DOCTYPE html>
+
+<!--
+  Taken from Google I/O 2011 HTML slides template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+		   Michael Brunton-Spall (Lightning talk support)
+
+  Original URL: http://code.google.com/p/io-2011-slides/
+  URL: http://github.com/bruntonspall/html5-slides/
+-->
+
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Puse : Sequence diagram editor" />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
     <title>Puse</title>
+
+    <meta charset='utf-8' />
+    <script src='slides.js'></script>
   </head>
 
-  <body>
+  <style>
+    /* Your individual styles here, or just use inline styles if that’s
+       what you want. */
+	article.biglogo {
+		background: white url(images/posterlogo.jpg) 50% 50% no-repeat;
+	}
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/eldemcan/Puse">View on GitHub</a>
+  </style>
 
-          <h1 id="project_title">Puse</h1>
-          <h2 id="project_tagline">Sequence diagram editor</h2>
+  <body style='display: none'>
+	<!-- This is the lightning timer, it autoadvances slides every 15 seconds -->
+	<div id="timer" class="floating">5:00</div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/eldemcan/Puse/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/eldemcan/Puse/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+    <section class='slides layout-widescreen'>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+      <!-- Your slides (<article>s) go here. Delete or comment out the
+           slides below. -->
+
+
+      <article>
+	  	<img class='centered' style='height: 100px' src='images/posterlogo.jpg'>
+        <h1>
+          Incremental Development 
+          <br>
+          with Sequence Diagrams
+        </h1>
+		<br>
+		<br>
+	
+        <p>
+          <b> Author:  &nbsp &nbsp &nbsp &nbsp  Supervisor: </b> 
+          <br>
+          Can Eldem &nbsp Dr. Juliana Bowles
+        </p>
+      </article>
+	  
+	      <article>
+	  <h3> Outline </h3>
+	    <ul class="build">
+		  <li>
+           Motivation of sequence diagrams
+          </li>
+          <li>
+           Objectives
+          </li>
+		  <li>
+          Existing frameworks supporting SDs
+          </li>
+		  <li>
+          Limitations of PlantUml
+          </li>
+		  <li>
+           Project and Tool illustrations
+          </li>
+		   <li>
+		  Conclusions
+		  </li>
+        </ul>    
+      </article>
+	   
+      <article>
+	  <h3> Sequence Diagrams </h3>
+	    <ul class="build">
+          <li>
+           Describe the sequence of actions 
+          </li>
+          <li>
+           Diagram progresses from top to bottom, with objects at the top from left to right
+          </li>
+        </ul>
+		<p>
+            <img class='centered' style='height: 400px' src='images/Sequence-Diagram-Sample.png'>
+        </p>
+     
+      </article>
+	  
+	   <article>
         <h3>
-<a name="welcome-to-puse-project-page" class="anchor" href="#welcome-to-puse-project-page"><span class="octicon octicon-link"></span></a>Welcome to Puse project page</h3>
+          Where Sequence Diagrams Used?
+        </h3>
+		 <ul>
+          <li>
+           Design and documentation  (SRS,SDD documents)
+          </li>
+          <li>
+           E.g multimedia, embedded system
+          </li>
+        </ul>
+        
+      </article>
+	  
+	      <article>
+	  <h3> Sequence Diagram Notations </h3>
+	    <p>
+            <img class='centered' style='height: 600px with: 300px' src='images/example_notations.jpg'>
+        </p>
+     
+      </article>
+	 <article>
+	  <h3> Sequence Diagram Notations </h3>
+	    <p>
+            <img class='centered' style='height: 400px' src='images/fig2.jpg'>
+        </p>
+     
+      </article>
+	  
+	     </article>
+	 <article>
+	  <h3> Objectives </h3>
+	      <ul class="build">
+          <li>
+           Develop a simple textual notation for sequence diagrams including all interaction fragment operators and decomposition mechanisms available in UML2
+          </li>
+          <li>
+          Generate a graphical sequence diagram from a given textual notation.
+          </li>
+		   <li>
+            Enable flexible changes to the textual notation with immediate visualization of the changes in the sequence diagram.
+          </li>
+		   <li>
+            Create a trace modeler 
+          </li>
+        </ul>
+      </article>
+	  
+	   <article>
+	  <h3> Developing Sequence Diagrams </h3>
+	      <ul class="build">
+          <li>
+          Sequence diagrams developed from textual notation. 
+          </li>
+          <li>
+          <img class='centered' style='height: 400px' src='images/survey.png'>
+          </li>
+		   <li>
+            New technologies emerge
+          </li>
+        </ul>
+      </article>
+	  
+	   <article>
+		<h3>Existing Products in Industry </h3>
+	      <ul class="build">
+          <li>
+      		UMLet
+          </li>
+          <li>
+          Visual Paradigm
+          </li>
+		   <li>
+            StarUML
+          </li>
+		   <li>
+            Architexa
+          </li>
+        </ul>
+      </article>
+	  
+	  <article>
+		<h3> Frameworks Using Textual Description  </h3>
+	      <ul class="build">
+          <li>
+      		Mscgen
+          </li>
+          <li>
+         Trace2uml
+          </li>
+		   <li>
+            Websequencediagrams
+          </li>
+		   <li>
+            PlantUml 
+          </li>
+		  	   <li>
+             Quick Sequence Diagram Editor
+          </li>
+		  <li>
+            <img class='centered' style='height: 150px' src='images/code_compare.png'>
+          </li>
+		 
+        </ul>
+      </article>
+	  
+	   <article>
+		<h3> PlantUml Architecture </h3>
+		  <p>   <img class='centered' style='height: 600px' src='images/fig8.jpeg'> </P>
+      </article>
+	  
+	   <article>
+		<h3> Limitations of PlantUml </h3>
+		 <ul class="build">
+          <li>
+      		PlantUml is not capable of generating XMI ﬁles
+          </li>
+		  <li>
+      		XML ﬁles generated by PlantUml do not include id tags
+          </li>
+		 <li>
+		        <section  class='smaller'>
+        <pre>
+&lt;svg&gt;
+    &lt;circle id="myCircle" fill="red" cx="100" cy="50" r="40" 
+        fill="url(#myGradient)"
+        onmousedown="alert('hello');"/> &lt;/svg &gt;
+</pre>
+        </section>
+		 </li>
+         <li>
+	   <p class='centered'>    <svg>
+				<circle id="myCircle" fill="red" cx="100" cy="50" r="40" 
+        fill="url(#myGradient)"
+        onmousedown="alert('hello');"/>
+  </svg>  </P>
+ </li>
+</ul>
+      </article>
+	  
+	   <article>
+	      <h3> Projects Using PlantUml</h3> 
+		    <p>   <img class='centered' style='height: 400px' src='images/fig11.png'> </P>
+      </article>
+	  	   <article>
+	     Program Overview
+			<br>
+		    <p>   <img class='centered' style='height: 600px' src='images/Programarchitecture.jpeg'> </P>
+      </article>
+	  
+	  
+	  	   <article>
+	       <h3> Display Mechanism</h3> 
+			<br>
+		    <p>   <img class='centered' style='height: 550px' src='images/display.jpeg'> </P>
+      </article>
+	  
+	     <article>
+	       <h3> Overall Look</h3> 
+			<iframe width="640" height="480" src="https://www.youtube.com/embed/bVb_QMe8Bjw?rel=0" frameborder="0" allowfullscreen></iframe>
+      </article>
+	  
+	    <article>
+		   <h3> Decomposition</h3> 
+			  <table>
+          <tr>
+            <th>
+            Life Line Decomposition
+            <th>
+             Reference Another Diagram
+			  </tr>
+          <tr>
+            <td>
+              <img class='centered' style='height: 300px' src='images/fig24.jpg'> 
+            <td>
+             <img class='centered' style='height: 300px' src='images/secondddd.png'> 
+           </tr>
+        </table>
+      </article>
+	  
+	   <article>
+		 <h3> Static Decomposition</h3> 
+		  <img class='centered' style='height: 500px' src='images/fig25.jpg'> 
+			   
+      </article>
+	  
+	    <article>
+		 <h3> Static Decomposition</h3> 
+		    <iframe width="640" height="480" src="https://www.youtube.com/embed/01th_yb8cTk?rel=0" frameborder="0" allowfullscreen></iframe>
+      </article>
+	  
+	  <article>
+		 <h3> Dynamic Decomposition</h3> 
+		     <img class='centered' style='height: 350px' src='images/fig27.jpg'> 
+			   
+      </article>
+	  
+	    <article>
+		 <h3> Dynamic Decomposition</h3> 
+		    <iframe width="640" height="480" src="https://www.youtube.com/embed/D3cNK80knNw?rel=0" frameborder="0" allowfullscreen></iframe>
+			   
+      </article>
+	  
+	      <article>
+		 <h3> Incremental Development Mechanism</h3> 
+		    <img class='centered' style='height: 550px' src='images/fig29.jpg'>
+      </article>
+	  
+	        <article>
+		 <h3> Incremental Development Mechanism</h3> 
+		 <iframe width="640" height="480" src="https://www.youtube.com/embed/XHCHbEC2D8o?rel=0" frameborder="0" allowfullscreen></iframe>
+      </article>
+	  
+	     
+	     <article>
+		 <h3> Other Small Features</h3> 
+		<iframe width="640" height="480" src="https://www.youtube.com/embed/u0dnRQigDfs?rel=0" frameborder="0" allowfullscreen></iframe>
+      </article>
+	  
+	  
+	  	  
+	  <article>
+		<h3> Software Engineering Process  </h3>
+	      <ul class="build">
+          <li>
+      		Development
+          </li>
+          <li>
+         Documentation
+          </li>
+		   <li>
+            Versioning
+          </li>
+		   <li>
+            Bug Control and Testing
+          </li>
+		  	   <li>
+            Deployment
+          </li>
+		  		 
+        </ul>
+      </article>
+	  
+	    <article>
+		<h3> Problems Occured During Project  </h3>
+	      <ul class="build">
+          <li>
+      		Inadequate Documentation
+          </li>
+          <li>
+        XML-PlantUml issues
+          </li> 
+        </ul>
+      </article>
+	  
+	    <article>
+		<h3> Future Developments  </h3>
+	      
+          <p>Form Based Diagram Drawers</p>
+          <p><img class='centered' style='height: 400px' src='images/fig36.jpg'></p>
+          
+        
+      </article>
+	  
+	  <article>
+	  	<h3> Future Developments  </h3>
+	      
+          <p>Speciﬁcation Document Parser</p>
+          <p><img class='centered' style='height: 300px' src='images/fig37.jpg'></p>       
+      </article>
+	  
+	  	  <article>
+	  	<h3> Future Developments  </h3>
+	      
+          <p>Program Improvements</p>
+         <ul class="build">
+          <li>
+      		More Automation 
+          </li>
+          <li>
+			Special ﬁle system
+          </li> 
+        </ul>   
+      </article>
 
-<h3>
-<a name="what-is-puse" class="anchor" href="#what-is-puse"><span class="octicon octicon-link"></span></a>What is Puse?</h3>
-
-<p>Puse is a simple sequence diagram drawer which utilizes a different approach for generating diagrams. Instead of drawing sequence diagrams in the old fashioned way of dragging and dropping items, Puse enables users to give textual commands and generate the corresponding graphics immediately.</p>
-
-<h3>
-<a name="which-language-and-frameworks-was-used-to-develop-puse-" class="anchor" href="#which-language-and-frameworks-was-used-to-develop-puse-"><span class="octicon octicon-link"></span></a>Which language and frameworks was used to develop Puse ?</h3>
-
-<p>Puse is written in Java-Eclipse and it uses <a href="http://plantuml.sourceforge.net/">PlantUml</a> framework for generating sequence diagrams.</p>
-
-<h3>
-<a name="video-tutorials" class="anchor" href="#video-tutorials"><span class="octicon octicon-link"></span></a>Video Tutorials</h3>
-
-<p>I decided to do some video tutorials instead of writing a long document about the functionality of Puse.</p>
-
-<p>1.<a href="http://youtu.be/bVb_QMe8Bjw">Introduction</a></p>
-
-<p>2.<a href="http://youtu.be/4B3div_4RnA">Removing Footer From Diagram</a></p>
-
-<p>3.<a href="http://youtu.be/XHCHbEC2D8o">Developing Sequence diagrams incrementally</a></p>
-
-<p>4.<a href="http://youtu.be/u0dnRQigDfs">Open Referenced diagram in new editor</a></p>
-
-<p>5.<a href="http://youtu.be/01th_yb8cTk">Referencing another diagram</a></p>
-
-<p>6.<a href="http://youtu.be/Yg89jgCTR6s">Referencing another diagram on object</a></p>
-
-<p>7.<a href="http://youtu.be/D3cNK80knNw">Referencing another diagram dynamically</a></p>
-
-<p>8.<a href="http://youtu.be/_mJ71JmST5g">Exporting diagram</a></p>
-
-<p>If you have a request for any other video, please send me an e-mail.</p>
-
-<h3>
-<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h3>
-
-<p>Puse is developed in <a href="http://www.eclipse.org/">Eclipse</a>. I put my eclipse-working directory on my github. By opening Eclipse or <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> and <a href="http://agile.csc.ncsu.edu/SEMaterials/tutorials/import_export/">importing</a> your project you can start working on it. You probably need to <a href="https://www.youtube.com/watch?v=HsPZe-9hyJ4">update the build-path</a> because Puse uses other frameworks. All frameworks are included in directory. <a href="http://eldemcan.github.io/Puse/doc/html/index.html">Here</a> is the Java doc page which you can see all the methods. </p>
-
-<h3>
-<a name="syntax" class="anchor" href="#syntax"><span class="octicon octicon-link"></span></a>Syntax</h3>
-
-<p>I will try to provide a document for syntax. However, you can take a look <a href="http://plantuml.sourceforge.net/sequence.html">here</a>. </p>
-
-<h3>
-<a name="download-and-install" class="anchor" href="#download-and-install"><span class="octicon octicon-link"></span></a>Download and Install</h3>
-
-<p>You can download Puse from <a href="http://eldemcan.github.io/Puse/puse-setup.jar">here</a>.</p>
-
-<h2>
-<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
-
-<ol>
-<li>Java</li>
-<li>Graphviz </li>
-</ol><h2>
-<a name="windows" class="anchor" href="#windows"><span class="octicon octicon-link"></span></a>Windows</h2>
-
-<ol>
-<li><p>Run setup file</p></li>
-<li><p>Choose** user file** to install Puse, otherwise Puse will not be able to generate diagrams.(See image below)</p></li>
-</ol><p><img src="http://eldemcan.github.io/Puse/images/windows.png" alt="windows installation "></p>
-
-<h2>
-<a name="linux" class="anchor" href="#linux"><span class="octicon octicon-link"></span></a>Linux</h2>
-
-<p>1.) In order to run the setup file you need to set permissions in your Linux system.</p>
-
-<p><img src="http://eldemcan.github.io/Puse/images/setupconfig.png" alt="setup permission"></p>
-
-<p>2.) After installation is completed, the file will appear on your desktop. It also requires permission to run.</p>
-
-<p><img src="http://eldemcan.github.io/Puse/images/shortcut.png" alt="setup permission"></p>
-
-<p>After this command is written, Puse icon on desktop should change.</p>
-
-<p>3.) Right click on shortcut in desktop and choose properties and add "java -jar" at the beginning of command part.</p>
-
-<p><img src="http://eldemcan.github.io/Puse/images/shortcutsetting.png" alt="setup permission"></p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>If you have any troubles and questions. You can contact with me via <a href="mailto:eldemcan@gmail.com">eldemcan@gmail.com</a> . Thanks for your attention. You can also visit my personal <a href="http://about.me/caneldem">web-page</a> also.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Puse maintained by <a href="https://github.com/eldemcan">eldemcan</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+	  	  <article>
+	  	<h3> Conclusion  </h3>
+		       
+          <p>Focus on</p>
+         <ul class="build">
+          <li>
+      		Decomposition
+          </li>
+          <li>
+			Incremental Development
+          </li> 
+        </ul>   
+		<p class='build'>
+		<br>
+		<img class='centered' style='height: 300px' src='images/githublogo.png'></p>
+		 <div class='source black'>
+          Source: http://eldemcan.github.io/Puse/
+        </div>
+		
+      </article>
+	  
+	  
+	  
+	  <article class='fill'>
+        <h3 class='green'>
+         Thanks for Listening
+        </h3>
+        <p>
+          <img src='images/questions.png'>
+        </p>
+       
+      </article>
   </body>
 </html>
